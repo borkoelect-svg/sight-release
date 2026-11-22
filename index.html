@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sight — Музыкальный стриминг нового поколения</title>
+    <meta name="description" content="Sight — удобный музыкальный клиент для Windows и Android с поддержкой Яндекс Музыки, ВК Музыки, рекомендаций «Мой поток» и умных подборок.">
+    
+    <!-- Настройки для социальных сетей -->
+    <meta property="og:title" content="Sight — Музыкальный стриминг">
+    <meta property="og:description" content="Единый плеер для Яндекс Музыки, ВК Музыки, YouTube Music и SoundCloud. Персональный поток треков.">
+    <meta property="og:image" content="./icon.svg">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --bg: #000000;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #ffffff;
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1a6;
+            --brand-yandex: #ffdb4d;
+            --brand-vk: #0077ff;
+            --brand-yt: #ff0000;
+            --brand-sc: #ff5500;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 980px;
+            padding: 40px 20px;
+        }
+
+        /* Хедер */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .app-icon {
+            width: 128px;
+            height: 128px;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px var(--border);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease;
+            background: #0a0a0a;
+        }
+
+        .app-icon:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin-bottom: 32px;
+        }
+
+        /* Кнопки скачивания */
+        .download-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--accent);
+            color: var(--bg);
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            background-color: #e5e5ea;
+            transform: scale(1.03);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Интеграции */
+        .integrations {
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .integrations p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .badge.yandex { border-color: rgba(255, 219, 77, 0.4); color: var(--brand-yandex); }
+        .badge.vk { border-color: rgba(0, 119, 255, 0.4); color: var(--brand-vk); }
+        .badge.yt { border-color: rgba(255, 0, 0, 0.4); color: var(--brand-yt); }
+        .badge.sc { border-color: rgba(255, 85, 0, 0.4); color: var(--brand-sc); }
+
+        /* Сетка фишек */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Секция changelog */
+        .changelog {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 60px;
+        }
+
+        .changelog h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .version-tag {
+            font-size: 0.8rem;
+            background: #ffffff;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-weight: 700;
+        }
+
+        .changelog ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .changelog li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        .changelog li::before {
+            content: "•";
+            color: var(--text-main);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            width: 100%;
+            max-width: 980px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .tagline { font-size: 1rem; }
+            .btn { width: 100%; justify-content: center; }
+            .changelog { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Шапка с иконкой -->
+        <header>
+            <img src="./icon.svg" alt="Sight App Icon" class="app-icon">
+            <h1>Sight</h1>
+            <p class="tagline">Весь твой музыкальный мир в одном приложении. Подборки по вкусу, любимые стриминговые сервисы и безупречный интерфейс.</p>
+            
+            <div class="download-group">
+                <!-- Замените ссылки на актуальные релизы в вашем репозитории -->
+                <a href="https://github.com/borkoelect-svg/sight-release/releases" class="btn" target="_blank">
+                    🪟 Скачать для Windows
+                </a>
+                <a href="https://github.com/borkoelect-svg/sight-release/releases" class="btn btn-outline" target="_blank">
+                    🤖 Скачать APK для Android
+                </a>
+            </div>
+        </header>
+
+        <!-- Поддерживаемые источники -->
+        <section class="integrations">
+            <p>Поддерживаемые источники музыки</p>
+            <div class="badge-row">
+                <span class="badge yandex">Яндекс Музыка</span>
+                <span class="badge vk">ВК Музыка</span>
+                <span class="badge yt">YouTube Music</span>
+                <span class="badge sc">SoundCloud</span>
+            </div>
+        </section>
+
+        <!-- Сетка главных фич -->
+        <section class="features-grid">
+            <div class="feature-card">
+                <h3>🌊 Мой поток</h3>
+                <p>Умная персонализированная подборка треков по вкусу, которая подстраивается под ваше настроение и привычки прослушивания в реальном времени.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎵 Единый плеер</h3>
+                <p>Управляйте музыкой из Яндекс Музыки, ВК Музыки, YouTube Music и SoundCloud в одном лаконичном и быстром интерфейсе.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💾 Умные плейлисты</h3>
+                <p>Создавайте плейлисты, переименовывайте их, удаляйте отдельные треки и добавляйте музыку в один клик прямо из плеера или рекомендаций.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Кроссплатформенность</h3>
+                <p>Нативное приложение для Windows, Android и Arch Linux с быстрым стримингом и кэшированием метаданных обложек и альбомов.</p>
+            </div>
+        </section>
+
+        <!-- Что нового в версии 1.3.0 -->
+        <section class="changelog">
+            <h2>Что нового <span class="version-tag">v1.3.0</span></h2>
+            <ul>
+                <li><strong>Плейлисты:</strong> сохранение добавленных треков после перезапуска и защита от дублей.</li>
+                <li>Новое окно добавления в плейлист со счётчиками и возможностью создания списка сразу с треком.</li>
+                <li>Быстрая кнопка «+» у треков в «Моей волне», рекомендациях, мини-плеере и полноэкранном режиме.</li>
+                <li>Переименование плейлистов в один клик и удаление отдельных композиций корзиной.</li>
+                <li>Поддержка отображения обложек и альбомов внутри плейлистов.</li>
+                <li>Всплывающие уведомления о результате действий.</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <p>© 2026 Sight • Официальный релизный репозиторий. <a href="https://github.com/borkoelect-svg/sight-release" target="_blank">GitHub</a></p>
+        <p style="font-size: 0.8rem; margin-top: 8px;">Windows 10/11 x64 • Android 7.0+ • Требуется интернет для стриминга.</p>
+    </footer>
+
+</body>
+</html>
